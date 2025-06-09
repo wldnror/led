@@ -7,7 +7,8 @@ options.rows = 32           # 디스플레이 행 수 (32로 설정)
 options.cols = 32           # 디스플레이 열 수 (32로 설정)
 options.chain_length = 1    # 연결된 패널의 개수
 options.parallel = 1        # 병렬 연결 개수 (기본 1)
-options.hardware_mapping = 'regular'  # HUB75 기본 맵핑
+options.hardware_mapping = 'adafruit-hat-pwm'  # 라즈베리파이 4, 5는 일반적으로 이 옵션 필요
+options.gpio_slowdown = 4  # 라즈베리파이 4,5에 종종 필요한 설정
 
 # RGBMatrix 인스턴스 생성
 matrix = RGBMatrix(options=options)
