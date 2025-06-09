@@ -1,12 +1,25 @@
-led $ ~/led/demo_wrapper.py
-mmap error: : Invalid argument
-MMapping from base 0xfe000000, offset 0x3000
-mmap error: : Invalid argument
-MMapping from base 0xfe000000, offset 0x101000
-Suggestion: to slightly improve display update, add
-	isolcpus=3
-at the end of /boot/cmdline.txt and reboot (see README.md)
-FYI: not running as root which means we can't properly control timing unless this is a real-time kernel. Expect color degradation. Consider running as root with sudo.
-Size: 128x32. Hardware gpio mapping: regular
-Press <CTRL-C> to exit and reset LEDs
+#!/usr/bin/env python3
+import subprocess
 
+def main():
+    demo_bin = "/home/user/rpi-rgb-led-matrix/examples-api-use/demo"
+
+    cmd = [
+        "sudo",                # 여기서 sudo로 권한 확보
+        demo_bin,
+        "-D", "0",                     # 회전 사각형 데모
+        "--led-no-hardware-pulse",     # 하드웨어 펄스 비활성화
+        "--led-no-drop-privs",         # 권한 드롭 방지
+        "--led-rows", "32",
+        "--led-cols", "64",
+        "--led-chain", "2",
+        "--led-parallel", "1"
+    ]
+
+    try:
+        subprocess.run(cmd, check=True)
+    except KeyboardInterrupt:
+        pass
+
+if __name__ == "__main__":
+    main()
