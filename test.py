@@ -3,25 +3,19 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions
 import time
 
 options = RGBMatrixOptions()
-options.rows = 32
-options.cols = 32
-options.chain_length = 1
-options.parallel = 1
-options.hardware_mapping = 'adafruit-hat'
-
-# ↓ 권한 드롭 방지
-options.drop_privileges = False
-
-# ↓ 만약 라이브러리에서 지원한다면 이 옵션으로 대체
-# options.disable_hardware_pulse = True
+options.rows            = 32            # 매트릭스 행 수
+options.cols            = 32            # 매트릭스 열 수
+options.chain_length    = 1             # 체인된 패널 수
+options.parallel        = 1             # 병렬 연결 수
+options.hardware_mapping = 'regular'    # 단순 변환 보드일 땐 'regular'
+options.drop_privileges = False         # 권한 드롭 방지
 
 matrix = RGBMatrix(options=options)
 
 try:
-    colors = [(255,0,0),(0,255,0),(0,0,255)]
-    while True:
-        for c in colors:
-            matrix.Fill(*c)
-            time.sleep(1)
+    # 빨강 → 초록 → 파랑 순으로 깜빡이기
+    for color in [(255,0,0),(0,255,0),(0,0,255)]:
+        matrix.Fill(*color)
+        time.sleep(1)
 finally:
     matrix.Clear()
