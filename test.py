@@ -41,9 +41,8 @@ def main():
     options.drop_privileges = False
 
     if args.led_no_hardware_pulse:
-        # Force software PWM/timing
-        options.hardware_mapping    = "regular"
-        options.pwm_lsb_nanoseconds = 0
+        # Disable hardware pulse generator
+        options.disable_hardware_pulse = True
 
     matrix = RGBMatrix(options=options)
 
@@ -53,7 +52,6 @@ def main():
             matrix.Fill(*color)
             time.sleep(1)
     finally:
-        # Clear display on exit
         matrix.Clear()
 
 if __name__ == "__main__":
