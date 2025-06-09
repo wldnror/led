@@ -1,21 +1,28 @@
 #!/usr/bin/env python3
+import argparse
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 import time
 
+# 1) argparse 로 플래그 정의
+parser = argparse.ArgumentParser()
+parser.add_argument("--led-rows",    type=int,   default=32)
+parser.add_argument("--led-cols",    type=int,   default=32)
+parser.add_argument("--led-chain",   type=int,   default=1)
+parser.add_argument("--led-parallel",type=int,   default=1)
+parser.add_argument("--led-no-hardware-pulse", action="store_true")
+args = parser.parse_args()
+
+# 2) 옵션에 반영
 options = RGBMatrixOptions()
-options.rows            = 32            # 매트릭스 행 수
-options.cols            = 32            # 매트릭스 열 수
-options.chain_length    = 1             # 체인된 패널 수
-options.parallel        = 1             # 병렬 연결 수
-options.hardware_mapping = 'regular'    # 단순 변환 보드일 땐 'regular'
-options.drop_privileges = False         # 권한 드롭 방지
+options.rows            = args.led_rows
+options.cols            = args.led_cols
+options.chain_length    = args.led_chain
+options.parallel        = args.led_parallel
+options.drop_privileges = False
+if args.led_no_hardware_pulse:
+    options.hardware_mapping = 'regular'  # hardware pulse 대신 소프트웨어로
+    options.pwm_lsb_nanoseconds = 0       # 예시로 세팅
 
 matrix = RGBMatrix(options=options)
 
-try:
-    # 빨강 → 초록 → 파랑 순으로 깜빡이기
-    for color in [(255,0,0),(0,255,0),(0,0,255)]:
-        matrix.Fill(*color)
-        time.sleep(1)
-finally:
-    matrix.Clear()
+# 이하 동일…
