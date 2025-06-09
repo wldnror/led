@@ -24,10 +24,6 @@ def parse_args():
         "--led-parallel", type=int, default=1,
         help="Number of parallel chains (default: 1)"
     )
-    parser.add_argument(
-        "--led-no-hardware-pulse", action="store_true",
-        help="Disable hardware pulse generator (use software timing)"
-    )
     return parser.parse_args()
 
 
@@ -42,10 +38,7 @@ def main():
     options.parallel        = args.led_parallel
     options.drop_privileges = False
 
-    if args.led_no_hardware_pulse:
-        # Disable hardware pulse generator
-        options.disable_hardware_pulse = True
-
+    # Initialize matrix (hardware pulse used by default)
     matrix = RGBMatrix(options=options)
 
     try:
@@ -55,7 +48,6 @@ def main():
             time.sleep(1)
     finally:
         matrix.Clear()
-
 
 if __name__ == "__main__":
     main()
