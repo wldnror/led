@@ -3,6 +3,7 @@ import argparse
 import time
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Test an RGB LED matrix on Raspberry Pi 5 with custom options"
@@ -29,6 +30,7 @@ def parse_args():
     )
     return parser.parse_args()
 
+
 def main():
     args = parse_args()
 
@@ -53,6 +55,7 @@ def main():
             time.sleep(1)
     finally:
         matrix.Clear()
+
 
 if __name__ == "__main__":
     main()
