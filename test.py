@@ -42,13 +42,9 @@ def main():
 
     # 하드웨어 펄스 비활성화
     if args.led_no_hardware_pulse:
-        options.hardware_mapping      = "regular"
-        # Python 바인딩에서 지원하는 경우:
-        try:
+        options.hardware_mapping = "regular"
+        if hasattr(options, 'disable_hardware_pulse'):
             options.disable_hardware_pulse = True
-        except AttributeError:
-            # fallback: 최소 LSB timing 을 0으로 설정하여 소프트웨어 PWM 사용
-            options.pwm_lsb_nanoseconds = 0
 
     matrix = RGBMatrix(options=options)
 
