@@ -9,9 +9,11 @@ options.chain_length = 1
 options.parallel = 1
 options.hardware_mapping = 'adafruit-hat'
 
-# ↓ 아래 두 줄 추가
-options.led_no_hardware_pulse = True
-options.drop_privileges    = False
+# ↓ 권한 드롭 방지
+options.drop_privileges = False
+
+# ↓ 만약 라이브러리에서 지원한다면 이 옵션으로 대체
+# options.disable_hardware_pulse = True
 
 matrix = RGBMatrix(options=options)
 
